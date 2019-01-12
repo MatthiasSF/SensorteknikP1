@@ -10,16 +10,30 @@ import android.widget.TextView;
 
 import java.util.List;
 
+/**
+ * Adapter used by the ListView to display all of the sensors
+ * @author Matthias Falk
+ */
 public class ListAdapter extends ArrayAdapter {
-    private List<Sensor> sensorList;
+    private List<String> sensorList;
     private LayoutInflater inflater;
 
-    public ListAdapter(Context context, List<Sensor> sensorList) {
+    /**
+     * @param context the active context
+     * @param sensorList the list that will be used to pupulate the ListView
+     */
+    public ListAdapter(Context context, List<String> sensorList) {
         super(context, android.R.layout.simple_list_item_1,sensorList);
         this.sensorList = sensorList;
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
+    /**
+     * @param position the position of the item
+     * @param convertView
+     * @param parent
+     * @return returns the text associated with the item clicked
+     */
     public View getView(int position, View convertView, ViewGroup parent){
         TextView tv;
         if (convertView == null){
@@ -28,7 +42,7 @@ public class ListAdapter extends ArrayAdapter {
         else{
             tv = (TextView) convertView;
         }
-        tv.setText(sensorList.get(position).toString());
+        tv.setText(sensorList.get(position));
         return tv;
     }
 }

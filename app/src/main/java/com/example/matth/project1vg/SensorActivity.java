@@ -13,6 +13,10 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Activity that displays information about an sensor.
+ * @author Matthias Falk
+ */
 public class SensorActivity extends AppCompatActivity {
     private Sensor sensor;
     private int position;
@@ -20,6 +24,10 @@ public class SensorActivity extends AppCompatActivity {
     private List<Sensor> sensorList;
     private TextView tView;
 
+    /**
+     * Basic onCreate method. Initializes the components being used in the Activity
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,12 +39,25 @@ public class SensorActivity extends AppCompatActivity {
         setList();
         setSensor();
     }
+
+    /**
+     * Sets the text that is being displayed in the textview
+     * @param t - the text
+     */
     public void setText(String t){
         tView.setText(t);
     }
+
+    /**
+     * sets up the list
+     */
     private void setList() {
         sensorList = mSensorManager.getSensorList(Sensor.TYPE_ALL);
     }
+
+    /**
+     * sets the active sensor that we will display information on depending the sensor picked in the StartActivity
+     */
     public void setSensor(){
         if (mSensorManager.getDefaultSensor(sensorList.get(position).getType()) != null) {
             sensor = mSensorManager.getDefaultSensor(sensorList.get(position).getType());
@@ -44,6 +65,10 @@ public class SensorActivity extends AppCompatActivity {
             Toast.makeText(this, "Listener registered", Toast.LENGTH_LONG).show();
         }
     }
+
+    /**
+     * onResume method that registers the Listener
+     */
     @Override
     protected void onResume() {
         super.onResume();
@@ -51,6 +76,9 @@ public class SensorActivity extends AppCompatActivity {
         Toast.makeText(this, "Listener registered", Toast.LENGTH_LONG).show();
     }
 
+    /**
+     * onPause method that unregisters the listeners
+     */
     @Override
     protected void onPause() {
         super.onPause();
@@ -58,6 +86,9 @@ public class SensorActivity extends AppCompatActivity {
         Toast.makeText(this, "Listener unregistered", Toast.LENGTH_LONG).show();
     }
 
+    /**
+     * onDestroy method that unregisters the listener
+     */
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -65,6 +96,11 @@ public class SensorActivity extends AppCompatActivity {
         sensor = null;
         Toast.makeText(this, "Listener unregistered", Toast.LENGTH_LONG).show();
     }
+
+    /**
+     * Inner class that uses the SensorEventListener interface.
+     * Gets information about the chosen sensor
+     */
     private class SensorListener implements SensorEventListener{
 
         @Override
